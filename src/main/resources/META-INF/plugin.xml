@@ -1,0 +1,83 @@
+<idea-plugin>
+  <id>io.github.m313.contingentwatcher</id>
+  <name>Copilot Contingent Watcher</name>
+  <vendor url="https://github.com/m3-13/clion-contingent-watcher">m3-13</vendor>
+
+  <description><![CDATA[
+    <p>Shows your GitHub Copilot quota (premium requests or AI credits) in the status bar,
+    computes a daily budget and warns you in time.</p>
+    <ul>
+      <li>Status bar: remaining, used, percent or daily budget, with a fill-level icon.</li>
+      <li>Dashboard with four tabs: overview (gauge, today, daily budget, pace, buffer, forecast, daily chart),
+          history (activity per git branch, monthly review, usage per model), tips and settings.</li>
+      <li><b>btw</b>: quick side questions in their own window (Ctrl+Alt+Shift+B), answered with your editor context
+          and not mixed into your main task.</li>
+      <li>Threshold, pace and "use it or lose it" notifications; saving tips; German and English.</li>
+    </ul>
+    <p>Uses the sign-in of the GitHub Copilot plugin or a GitHub account from the IDE. All data stays local; no telemetry.
+    Not an official GitHub product.</p>
+  ]]></description>
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends optional="true" config-file="contingent-github.xml">org.jetbrains.plugins.github</depends>
+  <depends optional="true" config-file="contingent-git.xml">Git4Idea</depends>
+
+  <extensionPoints>
+    <extensionPoint qualifiedName="io.github.m313.contingentwatcher.ideGitHubAccounts"
+                    interface="io.github.m313.contingentwatcher.services.IdeGitHubAccounts" dynamic="true"/>
+    <extensionPoint qualifiedName="io.github.m313.contingentwatcher.branchProvider"
+                    interface="io.github.m313.contingentwatcher.services.BranchProvider" dynamic="true"/>
+  </extensionPoints>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="Copilot Contingent" anchor="right" secondary="false" icon="/icons/toolwindow.svg"
+                factoryClass="io.github.m313.contingentwatcher.ui.DashboardToolWindowFactory"/>
+    <toolWindow id="btw" anchor="right" secondary="true" icon="/icons/btw.svg"
+                factoryClass="io.github.m313.contingentwatcher.ui.BtwToolWindowFactory"/>
+    <statusBarWidgetFactory id="CopilotContingentWatcher" order="first"
+                            implementation="io.github.m313.contingentwatcher.ui.ContingentStatusBarWidgetFactory"/>
+    <applicationConfigurable parentId="tools" id="io.github.m313.contingentwatcher.settings"
+                             displayName="Copilot Contingent Watcher"
+                             instance="io.github.m313.contingentwatcher.ui.ContingentConfigurable"/>
+    <notificationGroup id="Copilot Contingent" displayType="BALLOON"/>
+    <postStartupActivity implementation="io.github.m313.contingentwatcher.actions.ContingentStartup"/>
+  </extensions>
+
+  <actions>
+    <group id="ContingentWatcher.Menu" text="Copilot Contingent" popup="true">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+      <action id="ContingentWatcher.ShowDetails" class="io.github.m313.contingentwatcher.actions.ShowDetailsAction"
+              text="Copilot Contingent: Show Quota Details" icon="/icons/toolwindow.svg"/>
+      <action id="ContingentWatcher.Refresh" class="io.github.m313.contingentwatcher.actions.RefreshAction"
+              text="Copilot Contingent: Refresh Quota" icon="AllIcons.Actions.Refresh"/>
+      <action id="ContingentWatcher.ShowTips" class="io.github.m313.contingentwatcher.actions.ShowTipsAction"
+              text="Copilot Contingent: Show Saving Tips"/>
+      <separator/>
+      <action id="ContingentWatcher.Btw" class="io.github.m313.contingentwatcher.actions.BtwAction"
+              text="Copilot Contingent: btw: Ask a Side Question" icon="/icons/btw.svg">
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift B"/>
+        <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift B" replace-all="true"/>
+        <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="meta alt shift B" replace-all="true"/>
+      </action>
+      <action id="ContingentWatcher.BtwShow" class="io.github.m313.contingentwatcher.actions.BtwShowAction"
+              text="Copilot Contingent: Show btw Window"/>
+      <separator/>
+      <action id="ContingentWatcher.SignIn" class="io.github.m313.contingentwatcher.actions.SignInAction"
+              text="Copilot Contingent: Sign in with GitHub"/>
+      <action id="ContingentWatcher.Snooze" class="io.github.m313.contingentwatcher.actions.SnoozeAction"
+              text="Copilot Contingent: Snooze Warnings for 24 Hours"/>
+      <action id="ContingentWatcher.ConfigureBillingToken" class="io.github.m313.contingentwatcher.actions.ConfigureBillingTokenAction"
+              text="Copilot Contingent: Set Up Usage per Model"/>
+      <action id="ContingentWatcher.OpenSettings" class="io.github.m313.contingentwatcher.actions.OpenSettingsAction"
+              text="Copilot Contingent: Open Settings"/>
+      <action id="ContingentWatcher.ShowLog" class="io.github.m313.contingentwatcher.actions.ShowLogAction"
+              text="Copilot Contingent: Show Log"/>
+      <action id="ContingentWatcher.GettingStarted" class="io.github.m313.contingentwatcher.actions.GettingStartedAction"
+              text="Copilot Contingent: Get Started"/>
+    </group>
+    <action id="ContingentWatcher.BtwExplainSelection" class="io.github.m313.contingentwatcher.actions.BtwExplainSelectionAction"
+            text="Copilot Contingent: btw: Explain Selection" icon="/icons/btw.svg">
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+    </action>
+  </actions>
+</idea-plugin>

@@ -1,0 +1,5 @@
+<idea-plugin>
+  <extensions defaultExtensionNs="io.github.m313.contingentwatcher">
+    <ideGitHubAccounts implementation="io.github.m313.contingentwatcher.integration.GitHubPluginAccounts"/>
+  </extensions>
+</idea-plugin>

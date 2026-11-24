@@ -1,0 +1,5 @@
+<idea-plugin>
+  <extensions defaultExtensionNs="io.github.m313.contingentwatcher">
+    <branchProvider implementation="io.github.m313.contingentwatcher.integration.GitBranchProvider"/>
+  </extensions>
+</idea-plugin>
