@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+- Fix: Dashboard und btw-Fenster starteten in CLion 2026.3 nicht (`NoClassDefFoundError: JBCefApp`). Seit 2026.x ist
+  der eingebettete Browser ein eigenes Plugin; das Plugin erklärt jetzt eine optionale Abhängigkeit darauf und zeigt
+  eine Textansicht, falls das Plugin „Web Browser (JCEF)“ deaktiviert ist.
+
 ## 0.2.0
 
 Erste Version für CLion (und alle anderen JetBrains-IDEs ab 2025.2). Sie hat den Funktionsumfang

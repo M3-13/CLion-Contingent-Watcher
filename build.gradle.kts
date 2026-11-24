@@ -78,12 +78,31 @@ tasks {
 }
 
 // Manual testing in IntelliJ IDEA Community (same platform, no license dialog):
-// ./gradlew runIdeForUiTests
+// ./gradlew runIdeForUiTests (2025.2) or runIde2026ForUiTests (2026.3, JCEF as its own plugin)
 intellijPlatformTesting {
     runIde {
         register("runIdeForUiTests") {
             type = org.jetbrains.intellij.platform.gradle.IntelliJPlatformType.IntellijIdeaCommunity
             version = "2025.2.6.4"
+            task {
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf(
+                        "-Didea.trust.all.projects=true",
+                        "-Djb.consents.confirmation.enabled=false",
+                        "-Djb.privacy.policy.text=<!--999.999-->",
+                        "-Didea.initially.ask.config=never",
+                        "-Dide.show.tips.on.startup.default.value=false",
+                        "-Dsun.java2d.uiScale=1",
+                        // Containers often run as root, where Chromium needs its sandbox off.
+                        "-Dide.browser.jcef.sandbox.enable=false",
+                    )
+                }
+                argumentProviders += CommandLineArgumentProvider { listOfNotNull(providers.gradleProperty("testProject").orNull) }
+            }
+        }
+        register("runIde2026ForUiTests") {
+            type = org.jetbrains.intellij.platform.gradle.IntelliJPlatformType.IntellijIdea
+            version = "2026.3"
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(

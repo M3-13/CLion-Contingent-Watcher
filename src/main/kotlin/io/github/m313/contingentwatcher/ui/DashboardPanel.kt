@@ -10,7 +10,6 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.ui.content.ContentFactory
-import com.intellij.ui.jcef.JBCefApp
 import io.github.m313.contingentwatcher.services.ContingentService
 import io.github.m313.contingentwatcher.services.ContingentSettings
 import io.github.m313.contingentwatcher.services.SettingsListener
@@ -103,7 +102,7 @@ class DashboardToolWindowFactory : ToolWindowFactory, com.intellij.openapi.proje
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         toolWindow.stripeTitle = L10n.t("Copilot Contingent")
         val factory = ContentFactory.getInstance()
-        if (!JBCefApp.isSupported()) {
+        if (!Jcef.isSupported()) {
             toolWindow.contentManager.addContent(factory.createContent(FallbackPanel(toolWindow.disposable), "", false))
             return
         }

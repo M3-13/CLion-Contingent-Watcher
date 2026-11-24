@@ -33,7 +33,7 @@ Es ist die JetBrains-Version der VS-Code-Erweiterung [Copilot Contingent Watcher
 2. In CLion: *Settings › Plugins › ⚙ › Install Plugin from Disk…* und `clion-contingent-watcher-<version>.zip` wählen.
 3. Nach dem Neustart erscheint das Kontingent unten rechts in der Statusleiste.
 
-Voraussetzung ist CLion (oder eine andere JetBrains-IDE) ab **2025.2**. Für Dashboard und btw-Fenster braucht die IDE den eingebetteten Browser (JCEF). Er ist in den offiziellen Builds enthalten.
+Voraussetzung ist CLion (oder eine andere JetBrains-IDE) ab **2025.2**. Für Dashboard und btw-Fenster braucht die IDE den eingebetteten Browser (JCEF). Er ist in den offiziellen Builds enthalten; ab 2026.x als mitgeliefertes Plugin „Web Browser (JCEF)“, das aktiviert sein muss.
 
 ## Wie es funktioniert
 
@@ -141,6 +141,7 @@ Voraussetzung: JDK 21. Gradle wird über den Wrapper geladen.
 ./gradlew buildPlugin        # erzeugt build/distributions/clion-contingent-watcher-<version>.zip
 ./gradlew runIde             # startet CLion mit dem Plugin
 ./gradlew runIdeForUiTests   # startet IntelliJ IDEA Community 2025.2 (ohne Lizenzdialog)
+./gradlew runIde2026ForUiTests  # startet IntelliJ IDEA 2026.3 (JCEF als eigenes Plugin)
 ./gradlew verifyPlugin       # prüft die Kompatibilität mit CLion 2025.2 und 2026.3
 ```
 

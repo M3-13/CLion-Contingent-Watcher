@@ -21,6 +21,8 @@
   <depends>com.intellij.modules.platform</depends>
   <depends optional="true" config-file="contingent-github.xml">org.jetbrains.plugins.github</depends>
   <depends optional="true" config-file="contingent-git.xml">Git4Idea</depends>
+  <!-- Since 2026.x the embedded browser (JCEF) is its own plugin; before that it is part of the platform. -->
+  <depends optional="true" config-file="contingent-jcef.xml">com.intellij.modules.jcef</depends>
 
   <extensionPoints>
     <extensionPoint qualifiedName="io.github.m313.contingentwatcher.ideGitHubAccounts"

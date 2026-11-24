@@ -14,7 +14,6 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.ui.content.ContentFactory
-import com.intellij.ui.jcef.JBCefApp
 import io.github.m313.contingentwatcher.btw.BtwHub
 import io.github.m313.contingentwatcher.btw.BtwRunner
 import io.github.m313.contingentwatcher.btw.BtwView
@@ -145,7 +144,7 @@ class BtwToolWindowFactory : ToolWindowFactory, DumbAware {
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         toolWindow.stripeTitle = L10n.t("btw")
         val factory = ContentFactory.getInstance()
-        if (!JBCefApp.isSupported()) {
+        if (!Jcef.isSupported()) {
             toolWindow.contentManager.addContent(
                 factory.createContent(com.intellij.ui.components.JBLabel(L10n.t("The btw window needs the IDE's embedded browser (JCEF).")), "", false),
             )
